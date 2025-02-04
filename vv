@@ -22,9 +22,9 @@ def combine_geojson(geojson1, geojson2):
 # Main function to combine GeoJSON files
 def main():
     try:
-        localGeoJSONPath = '/Users/ameliaydi/UK-GEOJSON/northen_ireland.geojson';
+        localGeoJSONPath = '/Users/ameliaydi/UK-GEOJSON/northen_ireland.json';
         remoteGeoJSONUrl = 'https://raw.githubusercontent.com/martinjc/UK-GeoJSON/refs/heads/master/json/electoral/gb/eer.json';
-        output_path = "/Users/ameliaydi/UK-GEOJSON/merged_uk_regions.geojson"
+        output_path = "/Users/ameliaydi/UK-GEOJSON/merged_uk_regions.json"
 
         local_geojson = read_local_geojson(localGeoJSONPath)
         remote_geojson = fetch_geojson(remoteGeoJSONUrl)
