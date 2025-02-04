@@ -1,0 +1,44 @@
+import json
+import requests
+
+# Function to read local GeoJSON file
+def read_local_geojson(file_path):
+    with open(file_path, 'r') as file:
+        return json.load(file)
+
+# Function to fetch GeoJSON from URL
+def fetch_geojson(url):
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
+
+# Function to combine two GeoJSON objects
+def combine_geojson(geojson1, geojson2):
+    return {
+        'type': 'FeatureCollection',
+        'features': geojson1['features'] + geojson2['features']
+    }
+
+# Main function to combine GeoJSON files
+def main():
+    try:
+        localGeoJSONPath = '/Users/ameliaydi/UK-GEOJSON/northen_ireland.geojson';
+        remoteGeoJSONUrl = 'https://raw.githubusercontent.com/martinjc/UK-GeoJSON/refs/heads/master/json/electoral/gb/eer.json';
+        output_path = "/Users/ameliaydi/UK-GEOJSON/merged_uk_regions.geojson"
+
+        local_geojson = read_local_geojson(localGeoJSONPath)
+        remote_geojson = fetch_geojson(remoteGeoJSONUrl)
+
+        combined_geojson = combine_geojson(local_geojson, remote_geojson)
+
+        # Save combined file
+        with open(output_path, "w", encoding="utf-8") as output_file:
+            json.dump(combined_geojson, output_file, indent=2)
+
+        print(f"✅ Combined GeoJSON saved to: {output_path}")
+
+    except Exception as error:
+        print("❌ Error combining GeoJSON files:", error)
+
+if __name__ == "__main__":
+    main()
